@@ -3,6 +3,7 @@ package xyz.raieen.broadcastmessagedemo;
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -12,6 +13,8 @@ public class ReceiverActivity extends Activity {
 
     String ourUser = "bob";
 
+    LinearLayout layout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -20,6 +23,8 @@ public class ReceiverActivity extends Activity {
         TextView textName = findViewById(R.id.text_name);
         textName.setText(ourUser);
 
+        layout = findViewById(R.id.layout);
+
         // Firestore
         FirebaseFirestore.getInstance()
                 .collection("user")
@@ -27,7 +32,7 @@ public class ReceiverActivity extends Activity {
                 .collection("message")
                 .addSnapshotListener((queryDocumentSnapshots, e) -> {
                     if (e != null) {
-                        Log.d(TAG, "onCreate: Error " + e.getMessage());
+                        Log.e(TAG, "onCreate: Error", e);
                         return;
                     }
 
@@ -48,6 +53,7 @@ public class ReceiverActivity extends Activity {
         messageView.setMessage(message);
         messageView.setSent(sent);
 
+        layout.addView(messageView);
         Log.d(TAG, "addMessageUI: Added message " + message);
     }
 }

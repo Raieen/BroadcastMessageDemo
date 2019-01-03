@@ -30,7 +30,6 @@ public class SenderActivity extends Activity {
 
         Button buttonLogin = findViewById(R.id.button_login);
         buttonLogin.setOnClickListener(v -> {
-            Log.d(TAG, "onCreate: asldaksdaasda");
             addMessage(editMessage.getText().toString());
         });
     }
